@@ -280,6 +280,8 @@ var force = d3.layout.force()
 
 var progress_counter = 0;
 
+var g_data;
+
 var data_request = d3.json("data/all_data.json")
     .on("progress", function() {
         progress_counter++;
@@ -299,8 +301,11 @@ var data_request = d3.json("data/all_data.json")
         }
     })
     .on("load", function(data) {
+        g_data = data; // make globally accessible for console inspection / debug
         d3.select("#loading-progress").style("width", "100%");
         $("#loading-modal").modal('hide');
+
+        keepOnlyFossils(data);
         processData(data);
         data_loaded = true;
 
@@ -1076,6 +1081,106 @@ function tick(event) {
     if (event.alpha < 0.05) {
         coolHandler();
     }
+}
+
+
+// fossil fuel companies
+let fossils = [
+    "AGL Energy",
+    "AGL Energy Limited",
+    "AGL Energy Ltd",
+    "AGL Limited",
+    "APA",
+    "APA Group",
+    "APPEA",
+    "Adani Mining Pty Ltd",
+    "Alinta Energy",
+    "Arrow Energy",
+    "Arrow Energy Pty Ltd",
+    "Australian Coal Association",
+    "Australian Petroleum Production & Exploration",
+    "Beach Energy",
+    "Beach Energy Limited",
+    "Beach Energy Ltd",
+    "Brickworks Limited",
+    "Brickworks Ltd",
+    "Caltex Australia Limited",
+    "Cartwheel Resources Pty Ltd",
+    "Chevron Australia",
+    "Chevron Australia Pty Ltd",
+    "Cormack Foundation Pty Ltd",
+    "ERM Power",
+    "ERM Power Limited",
+    "ERM Power Ltd",
+    "ERM Power Pty Ltd",
+    "Energy Australia",
+    "Energy Australia (Tru Energy)",
+    "Energy Australia Pty Ltd",
+    "Energy Developments",
+    "Energy Developments Limited",
+    "Energy Developments Ltd",
+    "GVK Group",
+    "Glencore",
+    "Hancock Coal",
+    "Hancock Coal Infrastructure Pty Ltd",
+    "Hancock Coal P/L",
+    "Hancock Coal Pty Ltd",
+    "Hancock Coal Pty Ltd (GVK)",
+    "Hancock Prospecting Pty Ltd",
+    "INPEX",
+    "Linc Energy",
+    "Linc Energy Limited",
+    "Mineralogy Pty Ltd",
+    "NSW Mining Council",
+    "New Hope Corporation Limited",
+    "New South Wales Minerals Council Ltd",
+    "Origin Energy",
+    "Peabody Energy Australia",
+    "Peabody Energy Australia Pty Ltd",
+    "QER Pty Ltd",
+    "Qld Resources Council",
+    "Queensland Coal Investments Pty Ltd",
+    "Santos",
+    "Santos Centre",
+    "Santos GLNG",
+    "Santos Limited",
+    "Santos Ltd",
+    "Shell Australia",
+    "Shenhua Australia Holdings Pty Ltd",
+    "St Baker Enterprises Pty Ltd",
+    "Sunset Power Pty Ltd",
+    "The Griffin Coal Mining Company",
+    "The Griffin Coal Mining Company Pty Ltd",
+    "The Shell Company of Australia",
+    "United Petroleum",
+    "United Petroleum P/L",
+    "United Petroleum Pty Ltd",
+    "Verona Capital Coal Mining Company",
+    "Verona Capital Ltd",
+    "Washington H Soul Pattinson and Company Limited",
+    "Washington H. Soul Pattinson",
+    "White Energy Company Limited",
+    "Whitehaven Coal Limited",
+    "Woodside",
+    "Woodside Energy",
+    "Woodside Energy Limited",
+    "Woodside Energy Ltd"
+];
+
+// isEntityFossilized : Int -> Array Entity -> Bool
+function isEntityFossilized(entityIndex, entities) {
+    return fossils.includes(entities[entityIndex].Name)
+}
+
+// keepOnlyFossils : data -> (data | data.receipts has only fossil fuel receipts)
+// modifies the paramater passed in.
+function keepOnlyFossils(data) {
+    const entities = data.entities;
+
+    // assumes data.receipts has Entity property which is an index into data.entities
+    data.receipts = data.receipts.filter(
+        r => fossils.includes(entities[r.Entity].Name)
+        ); // might be slow: 40K data points, repeated string comparisons
 }
 
 function processData(data) {
