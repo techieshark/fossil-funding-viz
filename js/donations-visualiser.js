@@ -1109,7 +1109,7 @@ let fossils = [
     "Cartwheel Resources Pty Ltd",
     "Chevron Australia",
     "Chevron Australia Pty Ltd",
-    "Cormack Foundation Pty Ltd",
+    // "Cormack Foundation Pty Ltd",
     "ERM Power",
     "ERM Power Limited",
     "ERM Power Ltd",
