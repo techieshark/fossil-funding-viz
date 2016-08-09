@@ -612,11 +612,12 @@ function updateInfoPanel() {
             });
     }
 
+    var million = Math.pow(10,6);
     var margins = { top: 0, right: 0, bottom: 25, left: 50 },
         chartWidth = 270 - margins.left - margins.right,
         chartHeight = 120 - margins.top - margins.bottom,
         x = d3.scale.ordinal().domain(d3.range(years[0], years[1] +1, 1)).rangeRoundBands([0, chartWidth]),
-        y = d3.scale.linear().domain([0, d3.max(yearTotals, function(d) { return d.values; })]).range([chartHeight, 0]),
+        y = d3.scale.linear().domain([0, 1.55 * million]).range([chartHeight, 0]), // d3.max(yearTotals, function(d) { return d.values; }) // hard code biggest total donation of any year
         xAxis = d3.svg.axis()
             .scale(x)
             .orient("bottom")
