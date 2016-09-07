@@ -1086,7 +1086,7 @@ function tick(event) {
 
 
 // fossil fuel companies
-let fossils = [
+var fossils = [
     "AGL Energy",
     "AGL Energy Limited",
     "AGL Energy Ltd",
@@ -1170,7 +1170,7 @@ let fossils = [
 
 // isEntityFossilized : Int -> Array Entity -> Bool
 function isEntityFossilized(entityIndex, entities) {
-    return fossils.includes(entities[entityIndex].Name)
+    return fossils.indexOf(entities[entityIndex].Name) >= 0;
 }
 
 // keepOnlyFossils : data -> (data | data.receipts has only fossil fuel receipts)
@@ -1179,9 +1179,9 @@ function keepOnlyFossils(data) {
     const entities = data.entities;
 
     // assumes data.receipts has Entity property which is an index into data.entities
-    data.receipts = data.receipts.filter(
-        r => fossils.includes(entities[r.Entity].Name)
-        ); // might be slow: 40K data points, repeated string comparisons
+    data.receipts = data.receipts.filter(function (r) {
+        return fossils.includes(entities[r.Entity].Name)
+    }); // might be slow: 40K data points, repeated string comparisons
 }
 
 function processData(data) {
