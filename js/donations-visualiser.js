@@ -34,8 +34,9 @@ var tour = new Tour({
     steps: [
         {
             title: "About this site",
-            content: "This graph represents all of the donations to Australian " +
-               "federal political parties in a given financial year.",
+            content: "This graph represents all of the donations to both of " +
+               "Australia's major federal political parties from fossil fuel companies " +
+               " (as defined by 350 Australia) in a given financial year.",
             element: "#vis .graph .container",
             placement: "left",
             backdrop: true,
