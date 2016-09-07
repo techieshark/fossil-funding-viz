@@ -306,6 +306,7 @@ var data_request = d3.json("data/all_data.json")
         $("#loading-modal").modal('hide');
 
         keepOnlyFossils(data);
+        keepOnlyMajorParties(data);
         processData(data);
         data_loaded = true;
 
@@ -1182,6 +1183,16 @@ function keepOnlyFossils(data) {
     data.receipts = data.receipts.filter(function (r) {
         return fossils.includes(entities[r.Entity].Name)
     }); // might be slow: 40K data points, repeated string comparisons
+}
+
+
+// keepOnlyMajorParties : data -> (data | data.receipts has only major party receipts )
+function keepOnlyMajorParties(data) {
+    var coalitionIndex = 75;
+    var laborIndex = 18;
+    data.receipts = data.receipts.filter(function (r) {
+        return r.Party == coalitionIndex || r.Party == laborIndex;
+    })
 }
 
 function processData(data) {
