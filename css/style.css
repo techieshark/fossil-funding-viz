@@ -279,6 +279,10 @@ input[type=range][orient=vertical]
     .hover-info {
         display: none; /* on small screens we pull up node info sidebar instead */
     }
+
+    .js-handleStartTour {
+        display: none; /* tour doesn't work on very small screens */
+    }
 }
 
 /* force show scrollbars on mac
