@@ -276,6 +276,9 @@ input[type=range][orient=vertical]
             position: relative;
             left: -10px;
         }
+    .hover-info {
+        display: none; /* on small screens we pull up node info sidebar instead */
+    }
 }
 
 /* force show scrollbars on mac
