@@ -675,7 +675,8 @@ function updateInfoPanel() {
         chartWidth = 270 - margins.left - margins.right,
         chartHeight = 120 - margins.top - margins.bottom,
         x = d3.scale.ordinal().domain(d3.range(years[0], years[1] +1, 1)).rangeRoundBands([0, chartWidth]),
-        y = d3.scale.linear().domain([0, 1.55 * million]).range([chartHeight, 0]), // d3.max(yearTotals, function(d) { return d.values; }) // hard code biggest total donation of any year
+        // y = d3.scale.linear().domain([0, 1.55 * million]).range([chartHeight, 0]), // d3.max(yearTotals, function(d) { return d.values; }) // hard code biggest total donation of any year
+        y = d3.scale.linear().domain([0, d3.max(yearTotals, function(d) { return d.values; })]).range([chartHeight, 0]),
         xAxis = d3.svg.axis()
             .scale(x)
             .orient("bottom")
