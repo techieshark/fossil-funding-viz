@@ -247,6 +247,9 @@ input[type=range][orient=vertical]
     .mobile-layout-block {
         display: block;
     }
+    .navbar-right {
+        display: inline-block;
+    }
 }
 
 /* force show scrollbars on mac
